@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | Hotel Accounting</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="./dashboard.css">
+</head>
+<body>
+  <%- include('partials/sidebar') %>
+
+  <div class="main-content">
+    <% if (user.level === 0) { %>
+      <div class="approval-alert">
+        <i class="fas fa-clock"></i>
+        <h2>Waiting for Admin Approval</h2>
+        <p>Your account is pending approval from an administrator. You'll be notified when your access is granted.</p>
+      </div>
+    <% } else if (user.level >= 3) { %>
+      <div class="header-section">
+        <h1>Dashboard</h1>
+        <select id="yearSelect" onchange="changeYear(this.value)">
+          <% for(let year = 2023; year <= 2030; year++) { %>
+            <option value="<%= year %>" <%= year === selectedYear ? 'selected' : '' %>><%= year %></option>
+          <% } %>
+        </select>
+      </div>
+      <div class="summary-cards">
+        <div class="card revenue">
+          <h3>Yearly Revenue</h3>
+          <p class="amount">₺<%= totalRevenue || '0.00' %></p>
+        </div>
+        <div class="card expense">
+          <h3>Yearly Expense</h3>
+          <p class="amount">₺<%= totalExpense || '0.00' %></p>
+        </div>
+        <div class="card gross-profit">
+          <h3>Yearly Gross Profit</h3>
+          <p class="amount <%= grossProfit >= 0 ? 'positive' : 'negative' %>">₺<%= grossProfit || '0.00' %></p>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <div class="chart-section">
+          <h2>Revenue</h2>
+          <canvas id="revenueChart"></canvas>
+        </div>
+        <div class="chart-section">
+          <h2>Expense</h2>
+          <canvas id="expenseChart"></canvas>
+        </div>
+        <div class="chart-section">
+          <h2>Gross Profit</h2>
+          <canvas id="grossProfitChart"></canvas>
+        </div>
+      </div>
+    <% } %>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Parse the serialized JSON data
+    const revenueData = JSON.parse('<%= revenueData %>');
+    const expenseData = JSON.parse('<%= expenseData %>');
+    const grossProfitData = JSON.parse('<%= grossProfitData %>');
+
+    const createBarChart = (ctxId, label, data, color) => {
+      const ctx = document.getElementById(ctxId).getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: [
+            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+          ],
+          datasets: [{
+            label: label,
+            data: data,
+            backgroundColor: color,
+            borderColor: color,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false },
+            title: { display: true, text: label }
+          },
+          scales: {
+            x: { grid: { display: false } },
+            y: { beginAtZero: true }
+          }
+        }
+      });
+    };
+
+    // Create charts with the provided data
+    createBarChart('revenueChart', 'Revenue', revenueData, '#4f46e5');
+    createBarChart('expenseChart', 'Expense', expenseData, '#ef4444');
+    createBarChart('grossProfitChart', 'Gross Profit', grossProfitData, '#10b981');
+
+    function changeYear(year) {
+      window.location.href = `/dashboard?year=${year}`;
+    }
+  </script>
+</body>
+</html>

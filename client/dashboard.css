@@ -1,0 +1,186 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9fafc;
+    display: flex;
+}
+
+.sidebar {
+    width: 80px; /* Fixed width for consistency */
+    background-color: #1f2937;
+    color: #fff;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    position: fixed;
+}
+
+.sidebar .logo {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.sidebar nav ul li {
+    width: 100%;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.sidebar nav ul li a {
+    text-decoration: none;
+    color: #cbd5e1;
+    font-size: 18px;
+    display: block;
+    padding: 10px 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar nav ul li a:hover {
+    background-color: #374151;
+    color: #fff;
+}
+
+.sidebar nav ul li a:hover::after {
+    left: 90px; /* Adjust tooltip position for smaller sidebar */
+}
+
+.main-content {
+    margin-left: 80px; /* Adjust margin to match sidebar width */
+    padding: 20px;
+    width: calc(100% - 80px);
+    overflow-y: auto;
+}
+
+/* Styling for summary cards in a single row */
+.summary-cards {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 10px;
+    width: 200px;
+    text-align: center;
+}
+
+.card h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #111827;
+}
+
+.card p {
+    margin: 10px 0 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.revenue p {
+    color: #10b981;
+}
+
+.expense p {
+    color: #ef4444;
+}
+
+.gross-profit p {
+    color: #10b981;
+}
+
+.net-profit p {
+    color: #10b981;
+}
+
+.card.negative p {
+    color: #ef4444;
+}
+
+.chart-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two charts per row */
+    gap: 20px;
+}
+
+.chart-section {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    text-align: center;
+}
+
+.chart-section canvas {
+    width: 100%;
+    height: 150px; /* Maintain compact height for charts */
+}
+
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+#yearSelect {
+    padding: 8px 16px;
+    font-size: 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background-color: white;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+#yearSelect:hover {
+    border-color: #4f46e5;
+}
+
+#yearSelect:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+.approval-alert {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    color: #856404;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    margin: 2rem auto;
+    max-width: 600px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.approval-alert i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #856404;
+}
+
+.approval-alert h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.approval-alert p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+}

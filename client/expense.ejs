@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Expense | Hotel Accounting</title>
+  <link rel="stylesheet" href="./revenue-expense.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <%- include('partials/sidebar') %>
+
+  <div class="main-content">
+    <h2>Expense Entry</h2>
+    <div class="form-container">
+      <% if (user.level >= 1) { %>
+        <!-- Expense Form -->
+        <form id="expenseForm" action="/expense" method="POST">
+          <input type="date" name="date" id="expDate" required />
+          <input type="text" name="category" id="expCategory" placeholder="Category (e.g. Utilities)" required />
+          <input type="number" name="amount" id="expAmount" placeholder="Amount (₺)" required />
+          <input type="number" name="vat" id="expVAT" placeholder="VAT/KDV (%)" required />
+          <input type="number" name="amortization" id="expAmortization" placeholder="Amortization (Years)" />
+          <button type="submit">Add Expense</button>
+        </form>
+      <% } %>
+
+      <% if (user.level >= 3) { %>
+        <!-- Report Generation Form -->
+        <form id="reportForm" action="/expense/report" method="GET">
+          <label for="startDate">Starting Date</label>
+          <input type="date" name="startDate" id="startDate" required />
+          <label for="endDate">Ending Date</label>
+          <input type="date" name="endDate" id="endDate" required />
+          <button type="submit">Generate Report</button>
+        </form>
+      <% } %>
+    </div>
+
+    <div class="recent-entries">
+      <h3>Recent Entries</h3>
+      <div class="entry-columns">
+        <span>Date</span>
+        <span>Category</span>
+        <span>Amount</span>
+        <span>VAT/KDV</span>
+        <% if (user.level >= 2) { %>
+          <span>Actions</span>
+        <% } %>
+      </div>
+      <ul id="recentExpenseList">
+        <% expense.forEach(entry => { %>
+          <li class="entry-row" data-entry-id="<%= entry.id %>">
+            <span><%= new Date(entry.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) %></span>
+            <span><%= entry.category %></span>
+            <span>₺<%= entry.amount %></span>
+            <span><%= entry.vat %> %</span>
+            <% if (user.level >= 2) { %>
+              <span class="actions">
+                <button class="small-btn" onclick="editEntry(this)">Edit</button>
+                <button class="small-btn" onclick="deleteEntry(this)">Delete</button>
+              </span>
+            <% } %>
+          </li>
+        <% }); %>
+      </ul>
+      
+      <!-- Add Pagination -->
+      <% if (totalPages > 1) { %>
+        <div class="pagination">
+          <% for(let i = 1; i <= totalPages; i++) { %>
+            <a href="/expense?page=<%= i %>" 
+               class="page-link <%= currentPage === i ? 'active' : '' %>">
+              <%= i %>
+            </a>
+          <% } %>
+        </div>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- Custom Alert Modal -->
+  <div id="alertModal" class="modal">
+    <div class="modal-content">
+      <h3 id="modal-title">Confirm Deletion</h3>
+      <p id="modal-message">Are you sure you want to delete this entry?</p>
+      <div class="modal-buttons">
+        <button id="modal-cancel" class="modal-btn cancel">Cancel</button>
+        <button id="modal-confirm" class="modal-btn confirm">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Container -->
+  <div id="notification" class="notification"></div>
+
+  <!-- Edit Drawer -->
+  <div id="editDrawer" class="drawer">
+    <div class="drawer-content">
+      <h3>Edit Expense</h3>
+      <form id="editForm">
+        <input type="hidden" id="editId" />
+        <label for="editDate">Date</label>
+        <input type="date" id="editDate" required />
+        <label for="editCategory">Category</label>
+        <input type="text" id="editCategory" required />
+        <label for="editAmount">Amount (₺)</label>
+        <input type="number" id="editAmount" required />
+        <label for="editVAT">VAT/KDV (%)</label>
+        <input type="number" id="editVAT" required />
+        <label for="editAmortization">Amortization (Years)</label>
+        <input type="number" id="editAmortization" placeholder="Amortization (Years)" />
+        <button type="submit" class="small-btn">Save Changes</button>
+        <button type="button" class="small-btn cancel-btn" onclick="closeDrawer()">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let onConfirmCallback;
+
+    function showModal(onConfirm) {
+      const modal = document.getElementById('alertModal');
+      modal.classList.add('show');
+      onConfirmCallback = onConfirm;
+
+      // Close modal on cancel
+      document.getElementById('modal-cancel').onclick = () => {
+        modal.classList.remove('show');
+      };
+
+      // Confirm action
+      document.getElementById('modal-confirm').onclick = () => {
+        modal.classList.remove('show');
+        if (onConfirmCallback) onConfirmCallback();
+      };
+
+      // Close modal if clicked outside
+      modal.onclick = (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('show');
+        }
+      };
+    }
+
+    function showNotification(message, type = 'success') {
+      const notification = document.getElementById('notification');
+      notification.textContent = message;
+      notification.className = `notification ${type}`;
+      notification.classList.add('show');
+
+      // Hide the notification after 3 seconds
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
+    }
+
+    function deleteEntry(button) {
+      const row = button.closest('.entry-row');
+      const id = row.dataset.entryId;
+
+      showModal(() => {
+        fetch(`/expense/${id}`, {
+          method: 'DELETE',
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.message) {
+              row.remove();
+              showNotification('Entry deleted successfully', 'success');
+            } else {
+              showNotification('Error deleting entry', 'error');
+            }
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+            showNotification('Error deleting entry', 'error');
+          });
+      });
+    }
+
+    function openDrawer(entry) {
+      const drawer = document.getElementById('editDrawer');
+      drawer.classList.add('open');
+
+      // Populate the form with entry data
+      document.getElementById('editId').value = entry.id;
+      document.getElementById('editDate').value = entry.date;
+      document.getElementById('editCategory').value = entry.category;
+      document.getElementById('editAmount').value = entry.amount;
+      document.getElementById('editVAT').value = entry.vat;
+      document.getElementById('editAmortization').value = entry.amortization || ''; // Populate amortization
+    }
+
+    function closeDrawer() {
+      const drawer = document.getElementById('editDrawer');
+      drawer.classList.remove('open');
+    }
+
+    document.getElementById('editForm').onsubmit = function (e) {
+      e.preventDefault();
+
+      const id = document.getElementById('editId').value;
+      const date = document.getElementById('editDate').value;
+      const category = document.getElementById('editCategory').value;
+      const amount = parseFloat(document.getElementById('editAmount').value);
+      const vat = parseFloat(document.getElementById('editVAT').value);
+      const amortization = parseInt(document.getElementById('editAmortization').value, 10) || null; // Get amortization value
+
+      fetch(`/expense/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ date, category, amount, vat, amortization }), // Include amortization in the request
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          if (data.message) {
+            showNotification('Entry updated successfully', 'success');
+            closeDrawer();
+            window.location.reload(); // Reload the page to reflect changes
+          } else {
+            showNotification('Error updating entry', 'error');
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          showNotification('Error updating entry', 'error');
+        });
+    };
+
+    function editEntry(button) {
+      const row = button.closest('.entry-row');
+      const entry = {
+        id: row.dataset.entryId,
+        date: row.querySelector('span:nth-child(1)').textContent,
+        category: row.querySelector('span:nth-child(2)').textContent,
+        amount: row.querySelector('span:nth-child(3)').textContent.replace('₺', '').trim(),
+        vat: row.querySelector('span:nth-child(4)').textContent.replace('%', '').trim(),
+        amortization: row.querySelector('span:nth-child(5)').textContent === 'N/A' ? null : row.querySelector('span:nth-child(5)').textContent.trim(),
+      };
+
+      openDrawer(entry);
+    }
+  </script>
+</body>
+</html>

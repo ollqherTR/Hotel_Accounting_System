@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | Hotel Accounting</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="login-container">
+    <h1>Welcome Back</h1>
+    <% if (typeof error !== 'undefined') { %>
+      <!-- Notification Bar -->
+      <div id="notificationBar" class="notification-bar">
+        <%= error %>
+      </div>
+    <% } %>
+    <form action="/login" method="POST">
+      <input type="text" name="username" placeholder="Username" required />
+      <input type="password" name="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="/register">Register here</a></p>
+    <p><a href="/">Back to Home</a></p> <!-- Back to Home Button -->
+  </div>
+  <%- include('partials/footer') %>
+
+  <script>
+    // Show notification bar if error exists
+    const notificationBar = document.getElementById('notificationBar');
+    if (notificationBar) {
+      notificationBar.style.display = 'block';
+
+      // Automatically hide the notification after 3 seconds
+      setTimeout(() => {
+        notificationBar.style.display = 'none';
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

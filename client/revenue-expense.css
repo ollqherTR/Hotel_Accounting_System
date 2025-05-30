@@ -1,0 +1,555 @@
+body {
+  display: flex;
+  height: 100vh;
+  background-color: #f9fafc;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+}
+
+.sidebar {
+  width: 80px; /* Fixed width for consistency */
+  background-color: #1f2937;
+  color: #fff;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  position: fixed; /* Ensure the sidebar is fixed to the left */
+  left: 0; /* Align the sidebar to the left edge */
+  top: 0; /* Align the sidebar to the top edge */
+}
+
+.sidebar .logo {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+nav ul li {
+  width: 100%;
+  text-align: center;
+  margin: 10px 0;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #cbd5e1;
+  font-size: 18px;
+  display: block;
+  padding: 10px 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav ul li a:hover {
+  background-color: #374151;
+  color: #fff;
+}
+
+.main-content {
+  margin-left: 80px; /* Add margin to prevent overlap with the sidebar */
+  padding: 40px;
+  width: calc(100% - 80px); /* Use the remaining width of the screen */
+  overflow-y: auto;
+  box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+h2 {
+  color: #111827;
+  margin-bottom: 20px;
+}
+
+form {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  max-width: 800px; /* Increase the maximum width */
+  width: 100%; /* Allow the form to expand fully */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+input, button {
+  padding: 12px 16px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  width: 100%; /* Ensure inputs and buttons take the full width of the form */
+  box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+button {
+  background-color: #4f46e5;
+  color: white;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #4338ca;
+}
+
+.recent-entries {
+  margin-top: 40px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 100%; /* Allow the recent entries section to expand fully */
+  width: 100%;
+}
+
+.recent-entries h3 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: #111827;
+}
+
+.recent-entries ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.recent-entries ul li {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr; /* Match the column layout */
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.recent-entries ul li:last-child {
+  border-bottom: none;
+}
+
+.entry-columns {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr; /* Adjust column widths */
+  font-weight: bold;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f3f4f6;
+  border-radius: 8px;
+  color: #374151;
+  font-size: 16px;
+  align-items: center;
+}
+
+.entry-columns span {
+  text-align: center;
+  display: flex; /* Use flexbox for alignment */
+  justify-content: center; /* Center-align horizontally */
+  align-items: center; /* Center-align vertically */
+}
+
+.entry-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr; /* Match column widths with header */
+  font-size: 16px;
+  padding: 10px;
+  align-items: center;
+}
+
+.entry-row span {
+  text-align: center;
+  display: flex; /* Use flexbox for alignment */
+  justify-content: center; /* Center-align horizontally */
+  align-items: center; /* Center-align vertically */
+}
+
+.entry-row:last-child {
+  border-bottom: none;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  grid-column: 5; /* Explicitly place actions in the 5th column */
+}
+
+.small-btn {
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 6px;
+  width: auto; /* Override the 100% width */
+  min-width: 60px; /* Set a minimum width for the buttons */
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.small-btn:first-child {
+  background-color: #3b82f6; /* Blue color for Edit button */
+}
+
+.small-btn:last-child {
+  background-color: #ef4444; /* Red color for Delete button */
+}
+
+.small-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  filter: brightness(110%);
+}
+
+.small-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Styling for summary cards in a single row */
+.summary-cards {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.card {
+  flex: 1;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.card h3 {
+  font-size: 18px;
+  color: #374151;
+  margin-bottom: 10px;
+}
+
+.card .amount {
+  font-size: 24px;
+  font-weight: bold;
+  color: #4f46e5;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 20px 0;
+}
+
+.page-link {
+  padding: 8px 12px;
+  border-radius: 6px;
+  background-color: #f3f4f6;
+  color: #374151;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.page-link:hover {
+  background-color: #e5e7eb;
+}
+
+.page-link.active {
+  background-color: #4f46e5;
+  color: white;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 400px;
+    transform: scale(0.7);
+    transition: transform 0.3s;
+    text-align: center;
+}
+
+.modal.show .modal-content {
+    transform: scale(1);
+}
+
+.modal h3 {
+    margin: 0 0 15px 0;
+    color: #2d3748;
+    font-size: 1.5rem;
+}
+
+.modal p {
+    margin: 0 0 20px 0;
+    color: #4a5568;
+    font-size: 1.1rem;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.modal-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 100px;
+}
+
+.modal-btn.confirm {
+    background-color: #ef4444;
+    color: white;
+}
+
+.modal-btn.confirm:hover {
+    background-color: #dc2626;
+    transform: translateY(-1px);
+}
+
+.modal-btn.cancel {
+    background-color: #e5e7eb;
+    color: #4b5563;
+}
+
+.modal-btn.cancel:hover {
+    background-color: #d1d5db;
+    transform: translateY(-1px);
+}
+
+/* Notification Styles */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #4caf50; /* Default success color */
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  font-weight: 500;
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.notification.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.notification.error {
+  background-color: #f44336; /* Error color */
+}
+
+.notification.success {
+  background-color: #4caf50; /* Success color */
+}
+
+/* Drawer Styles */
+.drawer {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%; /* Full width for responsiveness */
+  max-width: 600px; /* Limit the maximum width */
+  height: 100%;
+  background-color: white;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: right 0.3s ease;
+  overflow-y: auto;
+}
+
+.drawer.open {
+  right: 0;
+}
+
+.drawer-content {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.drawer-content h3 {
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #111827;
+  text-align: center;
+}
+
+.drawer-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.drawer-content label {
+  font-size: 14px;
+  color: #374151;
+}
+
+.drawer-content input {
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.drawer-content input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.drawer-content .small-btn {
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.drawer-content .cancel-btn {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.drawer-content .cancel-btn:hover {
+  background-color: #d1d5db;
+}
+
+.drawer-content .small-btn {
+  background-color: #4f46e5;
+  color: white;
+}
+
+.drawer-content .small-btn:hover {
+  background-color: #4338ca;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .drawer {
+    max-width: 100%; /* Full width for smaller screens */
+  }
+
+  .drawer-content {
+    padding: 20px;
+  }
+
+  .drawer-content h3 {
+    font-size: 1.5rem;
+  }
+
+  .drawer-content input {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .drawer-content .small-btn {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+/* Form Container Styles */
+.form-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+#revenueForm, #reportForm {
+  flex: 1;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#reportForm label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #374151;
+}
+
+#reportForm input, #reportForm button {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+#reportForm button {
+  background-color: #4f46e5;
+  color: white;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#reportForm button:hover {
+  background-color: #4338ca;
+}
+
+/* Checkbox Container Styles */
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Yazı ve checkbox arasındaki boşluk */
+}
+
+.checkbox-container input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}

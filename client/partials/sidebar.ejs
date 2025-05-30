@@ -1,0 +1,21 @@
+<div class="sidebar">
+  <div class="logo">🏨</div>
+  <nav>
+    <ul>
+      <% if (user.level >= 3) { %>
+        <li><a href="/dashboard" title="Dashboard"><i class="fas fa-home"></i></a></li>
+      <% } %>
+      
+      <% if (user.level >= 1) { %>
+        <li><a href="/revenue" title="Revenue"><i class="fas fa-coins"></i></a></li>
+        <li><a href="/expense" title="Expense"><i class="fas fa-money-bill-wave"></i></a></li>
+      <% } %>
+      
+      <% if (user.level >= 3) { %>
+        <li><a href="/tax" title="Tax"><i class="fas fa-file-invoice-dollar"></i></a></li>
+      <% } %>
+      
+      <li><a href="/logout" title="Logout"><i class="fas fa-sign-out-alt"></i></a></li>
+    </ul>
+  </nav>
+</div>
