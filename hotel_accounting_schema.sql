@@ -1,0 +1,54 @@
+-- USERS TABLE
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    level INTEGER DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- ADMINS TABLE
+CREATE TABLE admins (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- REVENUE TABLE
+CREATE TABLE revenue (
+    id SERIAL PRIMARY KEY,
+    date DATE NOT NULL,
+    category VARCHAR(100) NOT NULL,
+    amount NUMERIC(12,2) NOT NULL,
+    vat NUMERIC(5,2) NOT NULL,
+    vat_amount NUMERIC(12,2) NOT NULL,
+    gross_profit NUMERIC(12,2) NOT NULL,
+    accommodation_tax BOOLEAN DEFAULT FALSE,
+    accommodation_tax_amount NUMERIC(12,2) DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- EXPENSE TABLE
+CREATE TABLE expense (
+    id SERIAL PRIMARY KEY,
+    date DATE NOT NULL,
+    category VARCHAR(100) NOT NULL,
+    amount NUMERIC(12,2) NOT NULL,
+    vat NUMERIC(5,2) NOT NULL,
+    vat_amount NUMERIC(12,2) NOT NULL,
+    amortization INTEGER DEFAULT 0,
+    gross_expense NUMERIC(12,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- SYSTEM LOGS TABLE
+CREATE TABLE system_logs (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50),
+    action_type VARCHAR(50) NOT NULL,
+    action_details TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
