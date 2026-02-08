@@ -1,33 +1,58 @@
-# Hotel Accounting System
+# 🧾 Hotel Accounting System
 
-Bu proje, otel işletmeleri için gelir, gider ve vergi yönetimini kolaylaştıran bir muhasebe sistemidir.
+## 🇬🇧 English
 
-## Özellikler
+### 📌 About the Project
 
-- Kullanıcı ve yönetici (admin) girişi
-- Gelir ve gider kayıtları ekleme, düzenleme, silme
-- Yıllık ve aylık finansal özetler ve grafikler (dashboard)
-- KDV, konaklama vergisi, kurumlar ve gelir vergisi hesaplama
-- Excel formatında gelir/gider raporu oluşturma
-- Kullanıcı ve admin yönetimi (yetki seviyeleri)
-- Sistem hareketlerinin loglanması
+**Hotel Accounting System** is a web-based accounting application designed to help hotel businesses manage their financial operations efficiently. It allows hotels to track daily revenues and expenses, calculate taxes, and view financial summaries through a clean and user-friendly interface.
 
-## Kurulum
+This project is ideal for small and medium-sized hotels that need a simple yet powerful accounting solution without relying on complex third-party software.
 
-1. **Depoyu klonlayın:**
-   ```sh
+---
+
+### ✨ Features
+
+* User and Admin authentication
+* Role-based access control
+* Revenue and expense management (add, edit, delete)
+* Monthly and yearly financial dashboards
+* Tax calculations: VAT, Accommodation tax, Income tax, Corporate tax
+* Export revenue and expense reports to Excel
+* User and admin management
+* System activity logging
+
+---
+
+### 🧰 Tech Stack
+
+* **Backend:** Node.js, Express.js
+* **Database:** PostgreSQL
+* **Frontend:** HTML, CSS, JavaScript (EJS)
+* **Authentication:** Session-based authentication
+* **Reporting:** Excel export
+
+---
+
+### 🚀 Installation
+
+1. Clone the repository:
+
+   ```bash
    git clone <repo-url>
    cd Accounting/server
    ```
 
-2. **Bağımlılıkları yükleyin:**
+2. Install dependencies:
+
    ```sh
    npm install
    ```
 
-3. **Veritabanı ayarlarını yapın:**
-   - `.env` dosyasını oluşturun ve aşağıdaki değişkenleri doldurun:
-     ```
+3. Configure environment variables:
+
+   * Create a `.env` file and fill in the following:
+
+     ```env
      DB_USER=...
      DB_PASSWORD=...
      DB_HOST=...
@@ -37,24 +62,120 @@ Bu proje, otel işletmeleri için gelir, gider ve vergi yönetimini kolaylaştı
      NODE_ENV=development
      ```
 
-4. **Veritabanı tablolarını oluşturun:**  
-   Gerekli tabloları PostgreSQL üzerinde oluşturun (`users`, `admins`, `revenue`, `expense`, `system_logs`).
-   hotel_accounting_schema.sql dosyasinda gerekli tablolarin kodalari vardir.
+4. Create database tables:
 
-5. **Sunucuyu başlatın:**
+   * Use PostgreSQL to create `users`, `admins`, `revenue`, `expense`, `system_logs`.
+   * The `hotel_accounting_schema.sql` file contains the necessary SQL scripts.
+
+5. Start the server:
+
    ```sh
    npm start
    ```
 
-6. **Uygulamayı açın:**  
-   Tarayıcınızda `http://localhost:3000` adresine gidin.
+6. Open the application in your browser at `http://localhost:3000`
 
-## Kullanım
+---
 
-- Kullanıcı olarak kayıt olabilir ve giriş yapabilirsiniz.
-- Admin panelinden kullanıcı ve admin yönetimi yapabilirsiniz.
-- Gelir ve gider işlemlerini ekleyip, raporlar alabilirsiniz.
-- Vergi hesaplamalarını yıllara göre görebilirsiniz.
+### 🧑‍💻 Usage
 
+* Register and log in as a user.
+* Admin panel for managing users, admins, and logs.
+* Add, edit, delete revenues and expenses.
+* View monthly and yearly dashboards.
+* Generate Excel reports.
+* Track taxes per year.
 
-**Geliştirici:** Mert Eren Dilsiz
+---
+
+## 🇹🇷 Türkçe
+
+### 📌 Proje Hakkında
+
+**Hotel Accounting System**, otel işletmelerinin finansal işlemlerini etkin şekilde yönetmelerini sağlayan web tabanlı bir muhasebe uygulamasıdır. Sistem, günlük gelir ve giderleri takip etmeyi, vergi hesaplamalarını yapmayı ve finansal özetleri kullanıcı dostu bir arayüzle görüntülemeyi mümkün kılar.
+
+Bu proje, karmaşık yazılımlara ihtiyaç duymadan küçük ve orta ölçekli oteller için basit ama güçlü bir muhasebe çözümü sunar.
+
+---
+
+### ✨ Özellikler
+
+* Kullanıcı ve yönetici (admin) girişi
+* Yetki bazlı erişim kontrolü
+* Gelir ve gider yönetimi (ekleme, düzenleme, silme)
+* Aylık ve yıllık finansal panolar
+* Vergi hesaplamaları: KDV, Konaklama vergisi, Gelir vergisi, Kurumlar vergisi
+* Gelir ve gider raporlarını Excel’e aktarma
+* Kullanıcı ve admin yönetimi
+* Sistem hareketlerini loglama
+
+---
+
+### 🧰 Teknoloji
+
+* **Backend:** Node.js, Express.js
+* **Veritabanı:** PostgreSQL
+* **Frontend:** HTML, CSS, JavaScript (EJS)
+* **Kimlik doğrulama:** Session tabanlı
+* **Raporlama:** Excel export
+
+---
+
+### 🚀 Kurulum
+
+1. Depoyu klonlayın:
+
+   ```sh
+   git clone <repo-url>
+   cd Accounting/server
+   ```
+
+2. Bağımlılıkları yükleyin:
+
+   ```sh
+   npm install
+   ```
+
+3. Ortam değişkenlerini ayarlayın:
+
+   * `.env` dosyasını oluşturun ve aşağıdaki değişkenleri doldurun:
+
+     ```env
+     DB_USER=...
+     DB_PASSWORD=...
+     DB_HOST=...
+     DB_NAME=...
+     DB_PORT=...
+     SESSION_SECRET=...
+     NODE_ENV=development
+     ```
+
+4. Veritabanı tablolarını oluşturun:
+
+   * PostgreSQL üzerinde `users`, `admins`, `revenue`, `expense`, `system_logs` tablolarını oluşturun.
+   * `hotel_accounting_schema.sql` dosyasında gerekli tabloların SQL kodları mevcuttur.
+
+5. Sunucuyu başlatın:
+
+   ```sh
+   npm start
+   ```
+
+6. Tarayıcıdan `http://localhost:3000` adresine gidin
+
+---
+
+### 🧑‍💻 Kullanım
+
+* Kullanıcı olarak kayıt olun ve giriş yapın.
+* Admin panelinden kullanıcı, admin ve log yönetimi yapın.
+* Gelir ve giderleri ekleyin, düzenleyin, silin.
+* Aylık ve yıllık finansal panoları görüntüleyin.
+* Excel raporları oluşturun.
+* Yıllık vergi hesaplamalarını takip edin.
+
+---
+
+### 👨‍💻 Geliştirici
+
+**Mert Eren Dilsiz**
