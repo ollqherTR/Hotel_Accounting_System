@@ -129,34 +129,7 @@ router.post('/create', async (req, res) => {
 // Delete Admin
 // Deletes an admin from the database
 router.delete('/delete/:id', async (req, res) => {
-    if (!req.session.isAdmin) {
-        // Return unauthorized error if not authenticated as admin
-        return res.status(401).json({ message: 'Unauthorized' });
-    }
-
-    const { id } = req.params;
-
-    // Prevent admin from deleting themselves
-    if (parseInt(id) === req.session.adminId) {
-        return res.status(400).json({ message: 'Cannot delete yourself' });
-    }
-
-    try {
-        // Delete the admin from the database
-        const result = await db.query('DELETE FROM admins WHERE id = $1 RETURNING username', [id]);
-        
-        if (result.rows.length === 0) {
-            // Return not found error if admin does not exist
-            return res.status(404).json({ message: 'Admin not found' });
-        }
-
-        // Log the action
-        await logAction(req.session.adminUsername, 'DELETE_ADMIN', `Deleted admin with ID: ${id}`);
-        res.json({ message: 'Admin deleted successfully' });
-    } catch (err) {
-        console.error('Error deleting admin:', err); // Log errors
-        res.status(500).json({ message: 'Error deleting admin' }); // Send error response
-    }
+    return res.status(403).json({ message: 'Disabled for demo purposes' });
 });
 
 // Admin Logs Page
@@ -270,32 +243,7 @@ router.put('/users/:id/level', async (req, res) => {
 // Delete User
 // Deletes a user from the database
 router.delete('/users/:id', async (req, res) => {
-    if (!req.session.isAdmin) {
-        // Return unauthorized error if not authenticated as admin
-        return res.status(401).json({ error: 'Unauthorized access' });
-    }
-
-    try {
-        const { id } = req.params;
-        
-        // Check if the user exists
-        const userCheck = await db.query('SELECT * FROM users WHERE id = $1', [id]);
-        if (userCheck.rows.length === 0) {
-            return res.status(404).json({ error: 'User not found' });
-        }
-
-        // Delete the user from the database
-        await db.query('DELETE FROM users WHERE id = $1', [id]);
-        await logAction(req.session.adminUsername, 'DELETE_USER', `Deleted user ${id}`);
-        
-        res.json({ message: 'User deleted successfully' });
-    } catch (err) {
-        console.error('Error deleting user:', err.stack); // Log errors
-        res.status(500).json({ 
-            error: 'Server error while deleting user',
-            details: err.message 
-        });
-    }
+    return res.status(403).json({ message: 'Disabled for demo purposes' });
 });
 
 export default router; // Export the router
