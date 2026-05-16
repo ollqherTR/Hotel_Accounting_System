@@ -1,7 +1,9 @@
 body {
     min-height: 100vh;
     margin: 0;
-    background-color: #0f172a;
+    background: #0f172a;
+    background-image: none;
+    animation: none;
     color: #e5e7eb;
 }
 
@@ -79,6 +81,7 @@ body {
     padding: 96px 24px 32px;
     width: calc(100% - 80px);
     min-height: 100vh;
+    background: #0f172a;
     overflow-y: auto;
     box-sizing: border-box;
 }
