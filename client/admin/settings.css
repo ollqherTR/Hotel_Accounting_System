@@ -1,12 +1,20 @@
+body {
+    min-height: 100vh;
+    margin: 0;
+    background-color: #0f172a;
+    color: #e5e7eb;
+}
+
 .page-header {
     position: fixed;
     top: 0;
-    left: 80px; /* Sidebar genişliği kadar offset */
+    left: 80px;
     right: 0;
-    background-color: #4f46e5;
-    color: white;
+    background-color: #111827;
+    color: #ffffff;
     padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+    box-shadow: 0 12px 28px rgba(2, 6, 23, 0.26);
     z-index: 100;
     text-align: left;
 }
@@ -20,64 +28,6 @@
     display: none;
 }
 
-.users-container {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.users-list {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.users-list th, 
-.users-list td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.users-list th {
-    background-color: #f9fafb;
-    font-weight: 600;
-}
-
-.users-list tr:hover {
-    background-color: #f9fafb;
-}
-
-.logs-container {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-}
-
-.logs-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.logs-table th,
-.logs-table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.logs-table th {
-    background-color: #f9fafb;
-    font-weight: 600;
-}
-
-.logs-table tr:hover {
-    background-color: #f9fafb;
-}
-
 .sidebar {
     width: 80px;
     background-color: #1f2937;
@@ -88,8 +38,8 @@
     align-items: center;
     padding: 20px 0;
     position: fixed;
-    top: 0; /* Ekranın üstüne hizala */
-    left: 0; /* Ekranın sol tarafına hizala */
+    top: 0;
+    left: 0;
 }
 
 .sidebar .logo {
@@ -126,56 +76,27 @@
 
 .main-content {
     margin-left: 80px;
-    padding: 80px 20px 20px 20px; /* Üst padding'i header'a göre ayarla */
+    padding: 96px 24px 32px;
     width: calc(100% - 80px);
+    min-height: 100vh;
     overflow-y: auto;
+    box-sizing: border-box;
 }
 
-body {
-    background-color: #e5e7eb; /* Statik bir arka plan rengi */
-    background-image: url('/admin/background.jpg'); /* İsteğe bağlı bir arka plan görseli */
-    background-size: cover; /* Görseli tam ekran kaplayacak şekilde ayarla */
-    background-position: center; /* Görseli ortala */
-    background-repeat: no-repeat; /* Görselin tekrar etmesini engelle */
+.users-container,
+.logs-container,
+.add-admin-section,
+.admins-list-section {
+    background: #1e293b;
+    color: #e5e7eb;
+    padding: 22px;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    border-radius: 12px;
+    box-shadow: 0 18px 40px rgba(2, 6, 23, 0.24);
 }
 
-.section-header {
-    background-color: #4f46e5;
-    color: white;
-    padding: 15px 20px;
-    border-radius: 8px 8px 0 0;
-    margin: -20px -20px 20px -20px;
-}
-
-.section-header h2 {
-    margin: 0;
-    font-size: 20px;
-}
-
-.level-select {
-    padding: 6px;
-    border: 1px solid #e5e7eb;
-    border-radius: 4px;
-    background-color: white;
-    cursor: pointer;
-}
-
-.level-select:hover {
-    border-color: #4f46e5;
-}
-
-.delete-btn {
-    background-color: #ef4444;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.delete-btn:hover {
-    background-color: #dc2626;
+.logs-container {
+    margin-top: 20px;
 }
 
 .admin-container {
@@ -183,73 +104,150 @@ body {
 }
 
 .add-admin-section {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
+}
+
+.add-admin-section h2,
+.admins-list-section h2,
+.section-header h2 {
+    margin: 0 0 16px;
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.section-header {
+    background-color: #111827;
+    color: #ffffff;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+    border-radius: 10px 10px 0 0;
+    margin: -22px -22px 20px;
+}
+
+.users-list,
+.logs-table,
+.admins-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.users-list th,
+.users-list td,
+.logs-table th,
+.logs-table td,
+.admins-table th,
+.admins-table td {
+    padding: 13px 12px;
+    text-align: left;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+    color: #e5e7eb;
+}
+
+.users-list th,
+.logs-table th,
+.admins-table th {
+    background-color: #0f172a;
+    color: #cbd5e1;
+    font-weight: 700;
+}
+
+.users-list tr,
+.logs-table tr,
+.admins-table tr {
+    transition: background-color 0.2s ease;
+}
+
+.users-list tbody tr:hover,
+.logs-table tbody tr:hover,
+.admins-table tbody tr:hover {
+    background-color: rgba(59, 130, 246, 0.08);
+}
+
+.level-select {
+    padding: 8px 10px;
+    border: 1px solid rgba(148, 163, 184, 0.28);
+    border-radius: 6px;
+    background-color: #0f172a;
+    color: #ffffff;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.level-select:hover,
+.level-select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
+}
+
+.delete-btn {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.delete-btn:hover {
+    background-color: #dc2626;
+    transform: translateY(-1px);
 }
 
 .add-admin-section form {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+    max-width: none;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
 }
 
 .add-admin-section input {
-    padding: 8px;
-    border: 1px solid #e5e7eb;
-    border-radius: 4px;
     flex: 1;
+    min-width: 180px;
+    padding: 10px 12px;
+    border: 1px solid rgba(148, 163, 184, 0.28);
+    border-radius: 6px;
+    background-color: #0f172a;
+    color: #ffffff;
+}
+
+.add-admin-section input::placeholder {
+    color: #94a3b8;
+}
+
+.add-admin-section input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
 }
 
 .add-btn {
     background-color: #10b981;
     color: white;
     border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
+    padding: 10px 16px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    font-weight: 700;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 .add-btn:hover {
     background-color: #059669;
-}
-
-.admins-list-section {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.admins-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.admins-table th,
-.admins-table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.admins-table th {
-    background-color: #f9fafb;
-    font-weight: 600;
-}
-
-.admins-table tr:hover {
-    background-color: #f9fafb;
+    transform: translateY(-1px);
 }
 
 /* Pagination Styles */
 .pagination {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 8px;
     margin-top: 20px;
     padding: 20px 0;
@@ -258,8 +256,9 @@ body {
 .pagination a {
     padding: 8px 12px;
     border-radius: 6px;
-    background-color: #f3f4f6;
-    color: #374151;
+    background-color: #0f172a;
+    color: #cbd5e1;
+    border: 1px solid rgba(148, 163, 184, 0.16);
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
@@ -267,10 +266,24 @@ body {
 }
 
 .pagination a:hover {
-    background-color: #e5e7eb;
+    background-color: #1d4ed8;
+    color: #ffffff;
 }
 
-.pagination a.active {
-    background-color: #4f46e5;
+.pagination a.active,
+.pagination .page-link.active {
+    background-color: #3b82f6;
     color: white;
+}
+
+@media (max-width: 860px) {
+    .users-container,
+    .logs-container,
+    .admins-list-section {
+        overflow-x: auto;
+    }
+
+    .add-admin-section form {
+        flex-direction: column;
+    }
 }
