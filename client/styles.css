@@ -18,7 +18,7 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 32px 16px;
+    padding: 32px 16px 84px;
     background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1, #fbc2eb);
     background-size: 400% 400%;
     animation: gradientShift 15s ease infinite;
@@ -330,9 +330,16 @@
     background-color: var(--sidebar-color);
     color: #ffffff;
     font-size: 14px;
-    position: absolute;
+    position: fixed;
+    left: 0;
     bottom: 0;
     width: 100%;
+    z-index: 10;
+  }
+
+  .footer p {
+    margin: 0;
+    line-height: 1.5;
   }
 
   .button-container {
